@@ -1,18 +1,22 @@
 # Server Log Analyzer User Guild
 
 
-
-## Go to project directory
-## package it
+## Build
+Go to project directory and package it using below command
+<br />
+<br />
 $ mvn clean package
 
-
-$ java -jar target/server-log-analyzer-1.0.0-SNAPSHOT.jar "absolute-path of logfile.txt"
-
-#####Example
+## Run
+Execute the below command 
+<br /><br />
+$ java -jar target/server-log-analyzer-1.0.0-SNAPSHOT.jar ["absolute-path of logfile.txt"]
+<br /><br />
+**Example**
+<br />
 java -jar /Users/jitendrabhadouriya/git/server-log-analyzer/target/server-log-analyzer-1.0.0-SNAPSHOT.jar "/Users/jitendrabhadouriya/git/server-log-analyzer/src/test/resources/logfile.txt"
 
-### Database File/folder
-data/logdb.log
-data/logdb.properties
-data/logdb.script
+## Database File/folder
+1. data/logdb.log
+2. data/logdb.properties
+3. data/logdb.script
