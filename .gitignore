@@ -41,6 +41,6 @@ hs_err_pid*
 *.iml
 .idea/
 
-#Database
+# Database folders
 /data
 /test-data

@@ -19,9 +19,28 @@ public class LogUtil {
 
   private static final ObjectMapper MAPPER = new ObjectMapper();
 
-  private LogUtil() {
+  /**
+   * This method deserializes the Json Content from given JSON Object into the Passed reference
+   * object
+   *
+   * @param obj - json string
+   * @param type - type of Java Bean in which Json object needs to be converted
+   * @return
+   */
+  public static <T> Optional<T> convert(final String jsonString, final Class<T> type) {
 
-    throw new IllegalStateException("Utility class should not be instanciated");
+    Optional<T> objBean = Optional.empty();
+
+    try {
+      objBean = Optional.of(MAPPER.readValue(jsonString, type));
+
+    } catch (final JsonProcessingException e) {
+      LOGGER.warn(
+          "Failed while deserializing JSON content from given JSON content String, {}",
+          jsonString,
+          e);
+    }
+    return objBean;
   }
 
   /**
@@ -46,49 +65,8 @@ public class LogUtil {
     return stringJson;
   }
 
-  /**
-   * This method deserializes the Json Content from given JSON Object into the Passed reference
-   * object
-   *
-   * @param obj - object containing json string
-   * @param type - type of Java Bean in which Json object needs to be converted
-   * @return
-   */
-  public static <T> T convert(final Object obj, final Class<T> type) {
+  private LogUtil() {
 
-    T objBean = null;
-
-    try {
-      objBean = MAPPER.readValue(writeValueAsString(obj, false), type);
-
-    } catch (final JsonProcessingException e) {
-      LOGGER.warn("Failed while deserializing JSON content from given JSON content String", e);
-    }
-    return objBean;
-  }
-
-  public static ObjectMapper getObjectMapper() {
-    return MAPPER;
-  }
-
-  /**
-   * This method deserializes the Json Content from given JSON Object into the Passed reference
-   * object
-   *
-   * @param obj - json string
-   * @param type - type of Java Bean in which Json object needs to be converted
-   * @return
-   */
-  public static <T> Optional<T> convert(final String jsonString, final Class<T> type) {
-
-    Optional<T> objBean = Optional.empty();
-
-    try {
-      objBean = Optional.of(MAPPER.readValue(jsonString, type));
-
-    } catch (final JsonProcessingException e) {
-      LOGGER.warn("Failed while deserializing JSON content from given JSON content String", e);
-    }
-    return objBean;
+    throw new IllegalStateException("Utility class should not be instanciated");
   }
 }

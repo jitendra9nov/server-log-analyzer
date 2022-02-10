@@ -1,8 +1,6 @@
 /*  © 2022 */
 package com.log.analyzer.beans;
 
-import static com.log.analyzer.constants.AnalyzerConstants.LOG_THRESHOLD;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -17,14 +15,16 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LogRecord {
 
-  private LogEvent startEvent;
-  private LogEvent endEvent;
+  private static final int LOG_THRESHOLD = 4;
+
+  private final LogEvent startEvent;
+  private final LogEvent endEvent;
 
   /**
    * @param startEvent
    * @param endEvent
    */
-  public LogRecord(LogEvent startEvent, LogEvent endEvent) {
+  public LogRecord(final LogEvent startEvent, final LogEvent endEvent) {
     this.startEvent = startEvent;
     this.endEvent = endEvent;
   }
@@ -36,13 +36,14 @@ public class LogRecord {
    */
   public long getDuration() {
 
-    return (null != endEvent && null != startEvent)
+    return null != endEvent && null != startEvent
         ? endEvent.getTimestamp() - startEvent.getTimestamp()
         : 0;
   }
 
-  public boolean isSlow() {
-    return getDuration() > LOG_THRESHOLD;
+  /** @return the endEvent */
+  public LogEvent getEndEvent() {
+    return endEvent;
   }
 
   /** @return the startEvent */
@@ -50,8 +51,7 @@ public class LogRecord {
     return startEvent;
   }
 
-  /** @return the endEvent */
-  public LogEvent getEndEvent() {
-    return endEvent;
+  public boolean isSlow() {
+    return getDuration() > LOG_THRESHOLD;
   }
 }

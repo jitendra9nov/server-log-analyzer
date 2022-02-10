@@ -17,26 +17,31 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LogEvent {
 
-  private String id;
-  private State state;
-  private long timestamp;
+  private final String id;
+  private final State state;
+  private final long timestamp;
 
-  private String type;
-  private String host;
+  private final String type;
+  private final String host;
 
   @JsonCreator
   public LogEvent(
-      @JsonProperty("id") String id,
-      @JsonProperty("state") State state,
-      @JsonProperty("timestamp") long timestamp,
-      @JsonProperty("type") String type,
-      @JsonProperty("host") String host) {
+      @JsonProperty("id") final String id,
+      @JsonProperty("state") final State state,
+      @JsonProperty("timestamp") final long timestamp,
+      @JsonProperty("type") final String type,
+      @JsonProperty("host") final String host) {
 
     this.id = id;
     this.state = state;
     this.timestamp = timestamp;
     this.type = type;
     this.host = host;
+  }
+
+  /** @return the host */
+  public String getHost() {
+    return host;
   }
 
   /** @return the id */
@@ -57,10 +62,5 @@ public class LogEvent {
   /** @return the type */
   public String getType() {
     return type;
-  }
-
-  /** @return the host */
-  public String getHost() {
-    return host;
   }
 }
